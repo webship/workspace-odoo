@@ -1,0 +1,76 @@
+{
+  "name": "@webship.co/workspace-odoo",
+  "version": "1.0.7",
+  "description": "Odoo Community for Webship Workspace: the builder (`cmd-odoo-project.sh`) and the odoo-bin tool in every sites folder, the default accounts, the Odoo step pack wired into the testing setup, and two AI agents in the AI Agents folder.",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webship/workspace-odoo.git"
+  },
+  "files": [
+    "dist/src",
+    "agents",
+    "commands",
+    "features",
+    "scripts",
+    "testing",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepare": "npm run build",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "lint": "tsc -p tsconfig.json --noEmit"
+  },
+  "workspacePlugin": {
+    "name": "odoo",
+    "label": "Odoo",
+    "commands": {
+      "types": [
+        "sites"
+      ],
+      "workspaces": [
+        "dev",
+        "test",
+        "sandboxes",
+        "demos"
+      ],
+      "files": [
+        "commands/cmd-odoo-project.sh",
+        "commands/cmd-tools-odoo-cli.sh"
+      ]
+    },
+    "scripts": {
+      "functions": [
+        "scripts/functions/fun-odoo.sh"
+      ],
+      "args": [
+        "scripts/args/arg-odoo.sh",
+        "scripts/args/arg-odoo-cli.sh"
+      ],
+      "machine": [
+        "scripts/odoo-accounts.py",
+        "testing/site.feature"
+      ]
+    },
+    "ai": {
+      "agents": [
+        "agents/odoo-site-builder.md",
+        "agents/odoo-tester.md"
+      ]
+    },
+    "features": [
+      "features/odoo.feature"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@webship.co/workspace-plugin-api": "^1.0.7",
+    "typescript": "^5.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
