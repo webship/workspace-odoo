@@ -180,9 +180,11 @@ landmarks and accessibility audits are used as they are and never redefined for 
   `Tags` and the others, and the name is a placeholder. The technical name passed:
   `When I set the "name" field to "A contact from the suite"`. The failure message lists the
   labels the form has.
-- **`I should be able to edit the website` is a step for an internal user.** For a visitor,
-  `I should not be able to edit the website` does not pass as "no": it fails with `Expected the
-  website preview of the web client`. Log in first, or leave it out of a visitor's scenario.
+- **`I should be able to edit the website` is a step for an internal user.** A visitor and a
+  portal user are not shown the website preview: they get the public page, and
+  `I should not be able to edit the website` passes for them. (With the pack before 2.1.1 it
+  failed there with `Expected the website preview of the web client`.) The positive form fails
+  for them and says to log in first.
 - **Deleting a record is done from the list.** Search for it, switch to the list view, select
   it, choose `Delete` in the Actions menu and confirm the dialog, as the example does.
 - **A product in the cart is a quotation in Sales.** `When I add the product to the cart` passed

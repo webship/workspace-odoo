@@ -1,4 +1,4 @@
-# @webship-js/odoo-steps 2.1.0 and webship-js 2.0.10
+# @webship-js/odoo-steps 2.1.1 and webship-js 2.0.10
 ^a (GET|POST|PUT|PATCH|DELETE) request to "([^"]*)" should have been made$
 ^all cookies are cleared$
 ^a request to "([^"]*)" should have been made$
