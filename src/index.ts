@@ -3,9 +3,9 @@
  *
  * What the package carries is placed by the installer from the manifest: the builder and the
  * odoo-bin tool in the sites folders, their functions, argparse and the accounts script under
- * core/scripts/plugins/odoo/, the agents in the AI Agents folder. The dashboard needs nothing
+ * core/scripts/plugins/odoo/, its AI items (ai/) in the AI folders. The dashboard needs nothing
  * drawn for it: the builder is in the Build list because it is a cmd-*-project.sh, the row menus
- * are the core's, the agents are listed like any other. What register() adds is what the
+ * are the core's, the AI items are listed like any other. What register() adds is what the
  * assistant is told.
  *
  * Everything the dashboard is asked for goes through `api`; this package requires nothing from the
@@ -23,6 +23,15 @@ export const COMMANDS = ['cmd-odoo-project.sh', 'cmd-tools-odoo-cli.sh'];
 /** The agents the installer places in the AI Agents folder. */
 export const AGENTS = ['odoo-site-builder', 'odoo-tester'];
 
+/** The skill the installer places in the AI Skills folder (a folder each, with its SKILL.md). */
+export const SKILLS = ['odoo-scenarios'];
+
+/** The slash command the installer places in the AI Commands folder. */
+export const AI_COMMANDS = ['odoo-test'];
+
+/** The prompt the installer places in the AI Prompts folder: a whole launch command for a new session. */
+export const PROMPTS = ['odoo-build-and-test'];
+
 /** What the assistant is told about Odoo in this workspace. */
 export function assistantContext(): string {
   return [
@@ -34,6 +43,8 @@ export function assistantContext(): string {
     '`--add-users` adds the default accounts (one per kind of user).',
     '`bash cmd-tools-testing.sh <name>` sets up webship-js with the Odoo step pack; `--run` runs the suite.',
     `For Odoo work, hand over to the agents ${AGENTS.map((a) => `\`${a}\``).join(' and ')}.`,
+    `The plugin also places the skill ${SKILLS.map((a) => `\`${a}\``).join(', ')} (the step pack's phrases, by area) in ai-skills/,`,
+    `the command ${AI_COMMANDS.map((a) => `\`/${a} <site>\``).join(', ')} in ai-commands/ and the prompt ${PROMPTS.map((a) => `\`${a}\``).join(' and ')} in ai-prompts/.`,
     'Community only: never the Enterprise edition, never a vendor account. Never run odoo, python or psql on the host for a project.',
     'The example builder cmd-odoo20-project.sh of a sites folder is a different, simpler build; this plugin leaves it as it is.',
   ].join(' ');

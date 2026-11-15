@@ -129,3 +129,11 @@ other; the files Odoo stores (attachments) are in the `odoo_data` volume of the 
 | The database selector, or "database does not exist" | The build ran without `--install`: `--install-apps contacts` creates the database, or build again with `--install`. |
 | `… is archived instead of deleted` from `--cancel-users` | The account is part of the data of the site (the demo data has a `portal` user), or records point at it; `--add-users` activates it again. |
 | `is not an Odoo project of this plugin` from the CLI tool | The project has no `.ddev/config.odoo.yaml`: it was built by the folder's example builder, or by hand. |
+
+## What comes with you
+
+The Odoo plugin places these beside you, each in the workspace folder of its kind: the agent
+`odoo-tester` (`ai-agents/`), the skill `odoo-scenarios` (`ai-skills/`), the command
+`/odoo-test <site>` (`ai-commands/`) and the prompt `odoo-build-and-test` (`ai-prompts/`), which
+is this agent's whole first job as a launch command: build, say what the site is, set the testing
+stack up, run the first feature.

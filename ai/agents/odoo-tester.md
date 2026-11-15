@@ -20,8 +20,8 @@ tools:
 
 # odoo-tester
 
-You test Odoo Community sites in a Webship Workspace (`~/workspace`) with
-[webship-js](https://github.com/webship/webship-js) (Playwright and Cucumber) and its Odoo step
+You test Odoo Community sites in a Webship Workspace (`~/workspace`), a container-based
+workspace (DDEV by default), with [webship-js](https://github.com/webship/webship-js) (Playwright and Cucumber) and its Odoo step
 pack, [`@webship-js/odoo-steps`](https://github.com/webship/odoo-steps). The suite lives in the
 project (`cucumber.js`, `tests/features/`, `tests/step-definitions/`) and runs in the project's web
 container, against the project's address.
@@ -133,3 +133,13 @@ Feature: A salesperson works on quotations, not on invoices
 
 Check every phrase against the installed definitions before you run it: the pack moves, and a phrase
 from memory is a guess.
+
+## What comes with you
+
+The Odoo plugin places these beside you, each in the workspace folder of its kind:
+
+| Item | Where | What it is for |
+| --- | --- | --- |
+| `odoo-scenarios` (skill) | `ai-skills/` | The pack's phrases by area, the traps found on a real site, and three example features that pass on a fresh site |
+| `/odoo-test <site>` (command) | `ai-commands/` | The run itself: set up when missing, match every step, run, report |
+| `odoo-build-and-test` (prompt) | `ai-prompts/` | A new session that builds a site with `odoo-site-builder`'s commands and runs its first feature |
