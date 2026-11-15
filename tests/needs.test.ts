@@ -12,9 +12,9 @@ const PKG = fs.existsSync(path.join(__dirname, '..', 'package.json')) ? path.joi
 const manifest = JSON.parse(fs.readFileSync(path.join(PKG, 'package.json'), 'utf8')).workspacePlugin;
 
 test("the manifest says what the plugin needs: the plugins and the commands it cannot work without, and what a part of it uses", () => {
-  assert.deepStrictEqual(manifest.needs, [['dev', 'test', 'sandboxes', 'demos'], 'ai-agents']);
+  assert.deepStrictEqual(manifest.needs, [['dev', 'test', 'sandboxes', 'demos'], 'ai-agents', 'ai-skills', 'ai-commands', 'ai-prompts']);
   assert.deepStrictEqual(manifest.suggests, undefined);
   assert.deepStrictEqual(manifest.needs[0], manifest.commands.workspaces, 'the alternatives are the folders the commands go to');
-  assert.ok(manifest.ai.agents.length > 0, 'it ships agents, which is why it needs the folder they are placed in');
+  for (const kind of ['agents', 'skills', 'commands', 'prompts']) assert.ok(manifest.ai[kind].length > 0, `it ships ${kind}, which is why it needs the folder they are placed in`);
   assert.match(fs.readFileSync(path.join(PKG, 'README.md'), 'utf8'), /^## What it needs$/m, 'and the README says so');
 });

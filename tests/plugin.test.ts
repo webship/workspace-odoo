@@ -14,7 +14,7 @@ const manifest = JSON.parse(read('package.json')).workspacePlugin;
 test('the manifest names the platform, and every file it names ships', () => {
   assert.strictEqual(manifest.name, PLATFORM);
   const named = [...manifest.commands.files, ...manifest.scripts.functions, ...manifest.scripts.args, ...manifest.scripts.machine,
-    ...manifest.ai.agents, ...manifest.features];
+    ...manifest.ai.agents, ...manifest.ai.skills, ...manifest.ai.commands, ...manifest.ai.prompts, ...manifest.features];
   for (const f of named) assert.ok(fs.existsSync(path.join(PKG, f)), `${f} is in the package`);
   assert.deepStrictEqual(manifest.commands.files.map((f: string) => path.basename(f)), COMMANDS);
   assert.deepStrictEqual(manifest.ai.agents.map((f: string) => path.basename(f, '.md')), AGENTS);
@@ -74,7 +74,7 @@ test('each agent is a definition the AI Agents folder can list: named after its 
     assert.match(head, /^tools:\n(  - \S+\n?)+/m);
     assert.match(src, /cmd-tools-testing\.sh|cmd-odoo-project\.sh/, `${f} names the plugin's commands`);
   }
-  const tester = read('agents/odoo-tester.md');
+  const tester = read('ai/agents/odoo-tester.md');
   assert.match(tester, /Never create an account in a suite/);
   assert.match(tester, /No platform name in a step phrase/);
   assert.match(tester, /Playwright MCP browser first/);
@@ -91,7 +91,7 @@ test('register() adds the assistant context and nothing else', () => {
 });
 
 test('the docs say container-based, name only what ships, and carry no personal value', () => {
-  const docs = ['README.md', ...manifest.ai.agents, 'scripts/functions/fun-odoo.sh', 'scripts/odoo-accounts.py'];
+  const docs = ['README.md', 'docs/plugin-items-pattern.md', ...manifest.ai.agents, 'scripts/functions/fun-odoo.sh', 'scripts/odoo-accounts.py'];
   for (const f of docs) {
     const src = read(f);
     assert.doesNotMatch(src, /DDEV-only/i, `${f}: the workspace is container-based, DDEV by default`);
