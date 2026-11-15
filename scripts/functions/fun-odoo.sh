@@ -25,7 +25,7 @@
 
 # The step pack an Odoo project is tested with, and the release line it is required at.
 readonly ODOO_STEPS_PACKAGE='@webship-js/odoo-steps';
-readonly ODOO_STEPS_VERSION='^2.1.0';
+readonly ODOO_STEPS_VERSION='^2.1.1';
 
 # The one database of a project (the container tool's own), and the port Odoo listens on.
 readonly ODOO_DATABASE='db';
