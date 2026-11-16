@@ -209,3 +209,14 @@ test('--install-apps ends with exit 1 and names an app odoo-bin skipped, instead
   assert.match(r.stdout, /^Not installed: nosuchapp\. odoo-bin skips a technical name it does not know/m);
   assert.doesNotMatch(r.stdout, /installed\.$/m);
 });
+
+test('an import of the database stops Odoo first and starts it after: Odoo holds a connection DDEV cannot drop', () => {
+  // Without it a restore ended with `database "db" is being accessed by other users` and an empty database.
+  const p = project('drupal11');
+  const r = bash(`odoo_site_write_ddev_config ${p.dir} 17.0`);
+  assert.strictEqual(r.status, 0, r.stderr);
+  const config = fs.readFileSync(path.join(p.dir, '.ddev', 'config.odoo.yaml'), 'utf8');
+  assert.match(config, /^hooks:\n  pre-import-db:\n    - exec-host: docker stop ddev-\$\{DDEV_SITENAME\}-odoo\n  post-import-db:\n    - exec-host: docker start ddev-\$\{DDEV_SITENAME\}-odoo\n/m);
+  const compose = fs.readFileSync(path.join(p.dir, '.ddev', 'docker-compose.odoo.yaml'), 'utf8');
+  assert.match(compose, /^    container_name: ddev-\$\{DDEV_SITENAME\}-odoo$/m, 'the hooks name the container the compose file names');
+});
