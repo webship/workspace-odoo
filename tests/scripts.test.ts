@@ -184,3 +184,28 @@ test('the first feature names no platform in a step, and no password', () => {
   assert.doesNotMatch(feature, /sign ?up|I register|create a new record/i, 'a suite never creates an account');
   assert.doesNotMatch(feature, /"webmaster"/, 'the administrator is the workspace account: no scenario logs in as it');
 });
+
+/** --install-apps on a built site, with a database that holds `installed` and odoo-bin that, like Odoo, ends with 0 whatever it was given. */
+function installApps(apps: string, installed: string[]) {
+  const p = project('odoo');
+  const log = path.join(p.root, 'ddev.log');
+  const fake = `ddev() { echo "ddev $*" >> "$DDEV_LOG" ; case "$*" in *"where state = 'installed'"*) printf '%s\\n' ${installed.join(' ')} ;; *psql*) echo installed ;; *curl*) echo 200 ;; *describe*) echo '"status":"running"' ;; *"odoo --version"*) echo 'Odoo Server 17.0' ;; esac ; return 0 ; }`;
+  const r = bash(`${fake}\nPROJECT_NAME=site1 ; RUN=_none_ ; INSTALL_APPS=${apps} ; trim_project_name() { :; } ; users=() ; odoo_cli_tool`,
+    { WORKSPACE_ROOT: p.root, WORKSPACE_SCRIPTS: p.scripts, doc_name: 'dev', DDEV_LOG: log, ...ACCOUNT });
+  return { r, ran: fs.readFileSync(log, 'utf8') };
+}
+
+test('--install-apps says what it installed, once the database has it', () => {
+  const { r, ran } = installApps('project', ['base', 'contacts', 'project']);
+  assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+  assert.match(ran, /^ddev exec -s odoo odoo .* --stop-after-init -i project$/m);
+  assert.match(r.stdout, /^Odoo 17\.0: project installed\.$/m);
+});
+
+test('--install-apps ends with exit 1 and names an app odoo-bin skipped, instead of a silent success', () => {
+  // odoo-bin answers "invalid module names, ignored: nosuchapp" as a warning and exits 0.
+  const { r } = installApps('project,nosuchapp', ['base', 'project']);
+  assert.strictEqual(r.status, 1);
+  assert.match(r.stdout, /^Not installed: nosuchapp\. odoo-bin skips a technical name it does not know/m);
+  assert.doesNotMatch(r.stdout, /installed\.$/m);
+});
