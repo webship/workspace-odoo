@@ -9,6 +9,7 @@ Build an Odoo Community site named <name> in this sites folder and test it with 
 # the builder deletes a project of the same name first: stop if <name> is a site somebody still needs
 # nothing on the host: no odoo-bin, python, psql or npm outside the site's container
 # the Community edition only: no other edition, no trial, no licence, no vendor account
+# a feature to write or a run to read: the book Automated Functional Testing Recipes first (its README.md, then the matching chapter), from .claude/automated-functional-testing-recipes/ in the project, ~/.claude/automated-functional-testing-recipes/ or https://github.com/webship/webship-js-ai-agent/tree/2.0.x/automated-functional-testing-recipes
 
 1. bash cmd-odoo-project.sh <name> --install --add-users
    (the default apps with demo data; add --apps <a,b> for another list of apps, --without-demo to leave the demo data out)

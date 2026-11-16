@@ -234,3 +234,21 @@ bash cmd-tools-testing.sh <site> --run --path tests/features/apps-and-views.feat
 | `examples/apps-and-views.feature` | A salesperson in the pipeline and in the quotations, an employee with no app of a role, the user menu |
 | `examples/contact-lifecycle.feature` | An administrator creating a contact, logging a note, finding it and deleting it: a record a scenario creates and removes |
 | `examples/website.feature` | A visitor on the front page, the blog, the shop, the events, the jobs and the contact page, an address with no page, and a portal user kept out of the web client |
+
+## The book
+
+For any automated functional testing in this work (a Gherkin feature, a step definition, choosing a
+step, a test run and its failures), read the book *Automated Functional Testing Recipes* first.
+
+- **Where.** Use the first that exists: `.claude/automated-functional-testing-recipes/` in the project,
+  `~/.claude/automated-functional-testing-recipes/` (installed by webship/webship-js-ai-agent,
+  webship/webship-js-skills or webship/ai-agents), or
+  https://github.com/webship/webship-js-ai-agent/tree/2.0.x/automated-functional-testing-recipes
+- **How.** Its `README.md` first, then the chapter that matches the task (one file per chapter,
+  named by its subject), not the single complete file.
+- **Which wins.** The installed webship-js package and the step pack are the source of truth for
+  step phrasing. When they differ from the book, follow them and say so.
+- **For Odoo.** Start with `ch27-testing-spa.md` (the web client is a single-page application),
+  `ch10-authentication-authorization.md` (logins, sessions and access by role),
+  `ch33-complete-step-definition-reference.md` (every built-in step) and `ch21-when-tests-go-bad.md`
+  (flaky, brittle and slow scenarios).

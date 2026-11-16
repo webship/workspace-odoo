@@ -137,3 +137,17 @@ The Odoo plugin places these beside you, each in the workspace folder of its kin
 `/odoo-test <site>` (`ai-commands/`) and the prompt `odoo-build-and-test` (`ai-prompts/`), which
 is this agent's whole first job as a launch command: build, say what the site is, set the testing
 stack up, run the first feature.
+
+## The book
+
+For any automated functional testing in this work (a Gherkin feature, a step definition, choosing a
+step, a test run and its failures), read the book *Automated Functional Testing Recipes* first.
+
+- **Where.** Use the first that exists: `.claude/automated-functional-testing-recipes/` in the project,
+  `~/.claude/automated-functional-testing-recipes/` (installed by webship/webship-js-ai-agent,
+  webship/webship-js-skills or webship/ai-agents), or
+  https://github.com/webship/webship-js-ai-agent/tree/2.0.x/automated-functional-testing-recipes
+- **How.** Its `README.md` first, then the chapter that matches the task (one file per chapter,
+  named by its subject), not the single complete file.
+- **Which wins.** The installed webship-js package and the step pack are the source of truth for
+  step phrasing. When they differ from the book, follow them and say so.

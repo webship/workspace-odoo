@@ -86,3 +86,9 @@ that needs an app of another edition is reported as such, never worked around. N
 never write a password into a feature file, and never write a platform name into a step phrase.
 For writing or fixing scenarios, use the `odoo-scenarios` skill or hand over to the `odoo-tester`
 agent; for changing the site, to `odoo-site-builder`.
+
+Before you write or change a scenario, or read a failed run, read the book *Automated Functional
+Testing Recipes* (its `README.md`, then the matching chapter):
+`.claude/automated-functional-testing-recipes/` in the project,
+`~/.claude/automated-functional-testing-recipes/`, or
+https://github.com/webship/webship-js-ai-agent/tree/2.0.x/automated-functional-testing-recipes
