@@ -75,6 +75,14 @@ function odoo_site_write_ddev_config() {
 # than editing by hand. The release is the tag of the image in docker-compose.odoo.yaml.
 web_environment:
   - ODOO_VERSION=${version}
+# Odoo keeps a connection to its database open, and ddev import-db cannot drop a database in use:
+# an import (a restore of a backup, Import a database, ddev import-db) stops Odoo first and starts
+# it again on the imported database.
+hooks:
+  pre-import-db:
+    - exec-host: docker stop ddev-\${DDEV_SITENAME}-odoo
+  post-import-db:
+    - exec-host: docker start ddev-\${DDEV_SITENAME}-odoo
 YAMLEOF
   cat > "${project_path}/.ddev/docker-compose.odoo.yaml" <<COMPOSEEOF
 ## Odoo Community, as a service of this project. Written by the Odoo builder of the workspace;
