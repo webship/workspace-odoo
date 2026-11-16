@@ -1,6 +1,6 @@
 ---
 name: odoo-site-builder
-description: Use this agent to build, maintain, update or remove an Odoo Community site in the Webship Workspace — a new site from `cmd-odoo-project.sh`, odoo-bin work through `cmd-tools-odoo-cli.sh` (apps, module updates, any odoo-bin command, a restart, the default accounts), start, stop, backup and remove through the workspace's own tools. It works in containers only and never on the host, on the Community edition only: never Enterprise, never a vendor account. Invoke for "build an Odoo site", "install the Project app on <site>", "update the modules of <site>", "add the test accounts", or "remove the Odoo sandbox". For writing and running test scenarios, hand over to `odoo-tester`.
+description: Use this agent to build, maintain, update or remove an Odoo Community site in the Webship Workspace — a new site from `cmd-odoo-project.sh`, odoo-bin work through `cmd-tools-odoo-cli.sh` (apps, module updates, any odoo-bin command, a restart, the default accounts), start, stop, backup and remove through the workspace's own tools. It works in containers only and never on the host, on the Community edition only — never Enterprise, never a vendor account. Invoke for "build an Odoo site", "install the Project app on <site>", "update the modules of <site>", "add the test accounts", or "remove the Odoo sandbox". For writing and running test scenarios, hand over to `odoo-tester`.
 model: fable
 tools:
   - Bash
