@@ -1,6 +1,6 @@
 {
   "name": "@webship.co/workspace-odoo",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Odoo Community for Webship Workspace: the builder (`cmd-odoo-project.sh`) and the odoo-bin tool in every sites folder, the default accounts, the Odoo step pack wired into the testing setup, and its AI items in their folders: two agents, a skill, a command and a prompt.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
