@@ -131,6 +131,22 @@ function odoo_is_installed() {
   [ "$(ddev exec -s db "psql -U db -d ${ODOO_DATABASE} -tAc \"select state from ir_module_module where name = 'base'\"" 2>/dev/null | tr -d '\r[:space:]')" == 'installed' ] ;
 }
 
+# The apps of a list (technical names, with commas) that are not installed in the project's database.
+# odoo-bin -i skips a name it does not know ("invalid module names, ignored") and still ends with 0,
+# so what was asked is read back from the database, not taken from the exit code.
+function odoo_apps_not_installed() {
+  local installed app apps missing="" ;
+  installed=" $(ddev exec -s db "psql -U db -d ${ODOO_DATABASE} -tAc \"select name from ir_module_module where state = 'installed'\"" 2>/dev/null | tr -d '\r' | tr '\n' ' ') " ;
+  IFS=', ' read -r -a apps <<< "$1" ;
+  for app in "${apps[@]}" ; do
+    case "${installed}" in
+      *" ${app} "*) ;;
+      *) missing="${missing:+${missing},}${app}" ;;
+    esac
+  done
+  echo "${missing}" ;
+}
+
 # Wait until Odoo answers on its own port.
 function odoo_site_wait() {
   local attempt code ;
@@ -292,7 +308,7 @@ function odoo_cli_tool() {
   fi
 
   if [ ! "${INSTALL_APPS}" == '_none_' ] ; then
-    local created='no' ;
+    local created='no' missing ;
     odoo_is_installed || created='yes' ;
     odoo_bin --log-level=warn --stop-after-init -i "${INSTALL_APPS}" || exit 1 ;
     users=() ;
@@ -303,6 +319,12 @@ function odoo_cli_tool() {
       odoo_accounts local || exit 1 ;
     fi
     odoo_site_restart || exit 1 ;
+    missing="$(odoo_apps_not_installed "${INSTALL_APPS}")" ;
+    if [ -n "${missing}" ] ; then
+      echo "Not installed: ${missing}. odoo-bin skips a technical name it does not know: the names are those of Apps (with the developer mode on, each app shows its technical name)." ;
+      exit 1 ;
+    fi
+    echo "Odoo $(odoo_version): ${INSTALL_APPS} installed." ;
   elif [ "${UPDATE}" == 'yes' ] ; then
     odoo_bin --log-level=warn --stop-after-init -u all || exit 1 ;
     odoo_site_restart || exit 1 ;
